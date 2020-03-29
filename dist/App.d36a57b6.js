@@ -30007,8 +30007,7 @@ var useDropdown = function useDropdown(label, defaultState, options) {
       },
       disabled: options.length === 0
     }, /*#__PURE__*/_react.default.createElement("option", null, "All"), options.map(function (item) {
-      /*#__PURE__*/
-      _react.default.createElement("option", {
+      return /*#__PURE__*/_react.default.createElement("option", {
         key: item,
         value: item
       }, item);
@@ -30030,7 +30029,7 @@ exports.default = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
-var _pet = require("@frontendmasters/pet");
+var _pet = _interopRequireWildcard(require("@frontendmasters/pet"));
 
 var _useDropdown5 = _interopRequireDefault(require("./useDropdown"));
 
@@ -30069,10 +30068,26 @@ var SearchParams = function SearchParams() {
       AnimalDropdown = _useDropdown2[1];
 
   var _useDropdown3 = (0, _useDropdown5.default)("Breed", "", breeds),
-      _useDropdown4 = _slicedToArray(_useDropdown3, 2),
+      _useDropdown4 = _slicedToArray(_useDropdown3, 3),
       breed = _useDropdown4[0],
-      BreedDropdown = _useDropdown4[1];
+      BreedDropdown = _useDropdown4[1],
+      setBreed = _useDropdown4[2];
 
+  (0, _react.useEffect)(function () {
+    setBreeds([]);
+    setBreed("");
+
+    _pet.default.breeds(animal).then(function (_ref) {
+      var breeds = _ref.breeds;
+      var breedStrings = breeds.map(function (_ref2) {
+        var name = _ref2.name;
+        return name;
+      });
+      setBreeds(breedStrings);
+    }, function (error) {
+      return console.error(error);
+    });
+  }, [animal, setBreeds, setBreed]);
   return /*#__PURE__*/_react.default.createElement("div", {
     className: "search-params"
   }, /*#__PURE__*/_react.default.createElement("form", null, /*#__PURE__*/_react.default.createElement("label", {
@@ -30135,7 +30150,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55222" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56868" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
